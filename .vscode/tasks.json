@@ -1,0 +1,57 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "Build SeamCarver Tests",
+      "command": "/usr/bin/clang++-10",
+      "args": [
+        "-std=c++20",
+        "-stdlib=libc++",
+        "-lc++abi",
+        "-I./includes",
+        "./src/image_ppm.cpp",
+        "./src/seam_carver.cpp",
+        "./tests/tests.cc",
+        "-o",
+        "./bin/tests"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": "build"
+    },
+    {
+      "type": "shell",
+      "label": "Build SeamCarver Driver",
+      "command": "/usr/bin/clang++-10",
+      "args": [
+        "-std=c++20",
+        "-stdlib=libc++",
+        "-lc++abi",
+        "-g",
+        "-O0",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I./includes",
+        "./src/image_ppm.cpp",
+        "./src/seam_carver.cpp",
+        "./src/driver.cpp",
+        "-o",
+        "./bin/driver"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": "build"
+    }
+  ]
+}
