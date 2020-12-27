@@ -1,17 +1,17 @@
 #include <fstream>
 #include <iostream>
 
-#include "image_ppm.hpp"
-#include "seam_carver.hpp"
+#include "../includes/image_ppm.hpp"
+#include "../includes/seam_carver.hpp"
 
 void print_usage(const std::string& command);
 
 int main(int argc, char* argv[]) {
   std::string out_option = "-o";
-  if (argc < 4 || out_option != argv[argc - 2]) {
-    print_usage(argv[0]);
-    return 1;
-  }
+  // if (argc < 4 || out_option != argv[argc - 2]) {
+  //   print_usage(argv[0]);
+  //   return 1;
+  // }
 
   // std::ifstream infile(argv[1]);
   // if (!infile.good()) {
@@ -54,7 +54,15 @@ int main(int argc, char* argv[]) {
   // std::ofstream outfile(argv[argc - 1]);
   // outfile << carver.get_image();
   // outfile.close();
+  ImagePPM image = ImagePPM("images/image1.ppm");
+  ImagePPM image2 = image;
+  Pixel p = image.get_pixel(2, 3);
+  std::cout << p.get_red() << ", " << p.get_green() << ", " << p.get_blue() << "\n";
+  image.~ImagePPM();
 
+
+  Pixel p2 = image2.get_pixel(2, 3);
+  std::cout << p2.get_red() << ", " << p2.get_green() << ", " << p2.get_blue() << "\n";  
   return 0;
 }
 

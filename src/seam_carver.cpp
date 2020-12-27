@@ -1,1 +1,1 @@
-#include "seam_carver.hpp"
+#include "../includes/seam_carver.hpp"
