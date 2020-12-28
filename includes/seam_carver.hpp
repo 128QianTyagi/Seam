@@ -3,6 +3,7 @@
 #include "image_ppm.hpp"
 #include <unordered_map>
 #include <algorithm>
+#include <vector>
 
 class SeamCarver {
 public:
@@ -127,5 +128,6 @@ private:
 
 
   int findMinPath(int row, int col);
-  std::vector<std::vector<int>> compute_vertical_energies();  
+  std::vector<std::vector<int>> compute_vertical_energies() const;
+  std::vector<std::vector<int>> compute_horizontal_energies() const;  
 };

@@ -93,18 +93,103 @@ int SeamCarver::findMinPath(int row, int col) {
 }
 
 int* SeamCarver::get_vertical_seam() const {
-    // std::vector<int> energies;
-    // for (int col = 0; col < get_width(); col++) {
-    //     int result = findMinPath(0, col);
-    //     energies.push_back(findMinPath(0, col));
-    // }
+    std::vector<std::vector<int>> energies = compute_vertical_energies();
+    int * path = new int[get_height()];
+
+    int startingValue = energies[0][0];
+    int currentColumn = 0;
+
+    for (int col = 1; col < get_width(); col++) {
+        if (energies[0][col] < startingValue) {
+            startingValue = energies[0][col];
+            currentColumn = col;
+        }
+    }    
+
+    path[0] = currentColumn;
+
+    for (int i = 0; i < get_height() - 1; i++) {
+        startingValue = energies[i + 1][path[i]];
+        currentColumn = path[i];
+
+        if (path[i] < get_width() - 1) {
+            int right = energies[i + 1][path[i] + 1];
+            if (right < startingValue) {
+                startingValue = right;
+                currentColumn = path[i] + 1;
+            }
+        }
+
+        if (path[i] > 0) {
+            int left = energies[i + 1][path[i] - 1];
+            if (left < startingValue) {
+                startingValue = left;
+                currentColumn = path[i] - 1;
+            }
+        }
+
+        path[i + 1] = currentColumn;
+    }
+
+    return path;
 }
 
-std::vector<std::vector<int>> SeamCarver::compute_vertical_energies() {
+std::vector<std::vector<int>> SeamCarver::compute_vertical_energies() const {
     std::vector<std::vector<int>> result;
     result.resize(get_height(), std::vector<int>(get_width()));
-    // for (int x = 0; x < get_width(); x++) {
-    //     result[][]
-    // }
-    std::cout << result.size() << "," << result[0].size() << "\n";
+    for (int x = 0; x < get_width(); x++) {
+        result[get_height() - 1][x] = get_energy(get_height() - 1, x);
+    }
+
+    for (int row = get_height() - 2; row >= 0; row--) {
+        for (int col = 0; col < get_width(); col++) {
+            int energy = get_energy(row, col);
+            int best = get_energy(row + 1, col);
+
+            if (col < get_width() - 1) {
+                int right = get_energy(row + 1, col + 1);
+                best = std::min(best, right);
+            }
+
+            if (col > 0) {
+                int left = get_energy(row + 1, col - 1);
+                best = std::min(best, left);
+            }
+
+            result[row][col] = best + energy;
+        }
+    }
+
+    return result;
+    // std::cout << result.size() << "," << result[0].size() << "\n";
+}
+
+std::vector<std::vector<int>> SeamCarver::compute_horizontal_energies() const {
+    std::vector<std::vector<int>> result;
+    result.resize(get_height(), std::vector<int>(get_width()));
+    for (int y = 0; y < get_height(); y++) {
+        result[y][get_width() - 1] = get_energy(y, get_width() - 1);
+    }
+
+    for (int col = get_width() - 2; col >= 0; col--) {
+        for (int row = 0; row < get_height(); row++) {
+            int energy = get_energy(row, col);
+            int best = get_energy(row, col + 1);
+
+            if (row < get_height() - 1) {
+                int right = get_energy(row + 1, col + 1);
+                best = std::min(best, right);
+            }
+
+            if (col > 0) {
+                int left = get_energy(row + 1, col - 1);
+                best = std::min(best, left);
+            }
+
+            result[row][col] = best + energy;
+        }
+    }
+
+    return result;
+    // std::cout << result.size() << "," << result[0].size() << "\n";
 }
