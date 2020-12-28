@@ -1,5 +1,5 @@
 CXX=clang++
-CXX_FLAGS=-std=c++20 -stdlib=libc++ -g -O0 -Wall -Wextra 
+CXX_FLAGS=-std=c++11 -stdlib=libc++ -g -O0 -Wall -Wextra 
 
 .PHONY: all test clean
 
@@ -18,8 +18,8 @@ image_ppm.o : includes/pixel.hpp includes/image_ppm.hpp src/image_ppm.cpp
 test : image_ppm.o seam_carver.o test.o
 	${CXX} ${CXX_FLAGS} -lc++abi test.o image_ppm.o seam_carver.o -o test
 
-test.o : tests/catch.hpp includes/image_ppm.hpp includes/seam_carver.hpp tests/test.cpp
-	${CXX} ${CXX_FLAGS} -c tests/test.cpp
+test.o : tests/catch.hpp includes/image_ppm.hpp includes/seam_carver.hpp tests/tests.cc
+	${CXX} ${CXX_FLAGS} -c tests/tests.cc
 
 clean :
 	rm *.o
