@@ -3,7 +3,11 @@
 // DO NOT MODIFY
 class Pixel {
 public:
-  Pixel() = default;
+  Pixel() {
+    red_ = -1;
+    green_ = -1;
+    blue_ = -1;
+  }
 
   Pixel(int r, int g, int b) {
     red_ = r;

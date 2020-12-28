@@ -63,6 +63,12 @@ int main(int argc, char* argv[]) {
 
   Pixel p2 = image2.get_pixel(2, 3);
   std::cout << p2.get_red() << ", " << p2.get_green() << ", " << p2.get_blue() << "\n";  
+
+  SeamCarver carver = SeamCarver(image2);
+  std::cout << image2.get_pixel(0, 1).get_red() << ", " << image2.get_pixel(0, 1).get_green() << ", " << image2.get_pixel(0, 1).get_blue() << "\n";
+  std::cout << image2.get_pixel(0, 3).get_red() << ", " << image2.get_pixel(0, 3).get_green() << ", " << image2.get_pixel(0, 3).get_blue() << "\n";
+  std::cout << image2.get_pixel(1, 0).get_red() << ", " << image2.get_pixel(1, 0).get_green() << ", " << image2.get_pixel(1, 0).get_blue() << "\n";
+  std::cout << image2.get_pixel(2, 0).get_red() << ", " << image2.get_pixel(2, 0).get_green() << ", " << image2.get_pixel(2, 0).get_blue() << "\n";
   return 0;
 }
 

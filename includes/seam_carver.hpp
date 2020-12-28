@@ -1,6 +1,8 @@
 #pragma once
 
 #include "image_ppm.hpp"
+#include <unordered_map>
+#include <algorithm>
 
 class SeamCarver {
 public:
@@ -110,8 +112,20 @@ private:
   /**
    * Add any variables you may need
    */
+  struct pair_hash {
+    /* data */
+    template <class T1, class T2>
+    std::size_t operator()(const std::pair<T1, T2> & pair) const {
+      return std::hash<T1>()(pair.first) ^ std::hash<T2>()(pair.second);
+    }
+  };
 
+  std::unordered_map<std::pair<int, int>, int, pair_hash> energyMap;
   /**
    * Add any helper methods you may need
    */
+
+
+  int findMinPath(int row, int col);
+  std::vector<std::vector<int>> compute_vertical_energies();  
 };
