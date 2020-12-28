@@ -14,6 +14,7 @@
 #define CATCH_CONFIG_MAIN
 #endif
 #include "catch.hpp"
+#include "grader_support.hpp"
 
 //////////////////////////////////////////////////////////////////////////////
 //                                 Includes                                 //
