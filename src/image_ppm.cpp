@@ -164,7 +164,7 @@ std::istream& operator>>(std::istream& is, ImagePPM& image) {
 
 std::ostream& operator<<(std::ostream& os, const ImagePPM& image) {
     os << "P3" << std::endl;
-    os << image.height_ << " " << image.width_ << std::endl;
+    os << image.width_ << " " << image.height_ << std::endl;
     os << image.get_max_color_value() << std::endl;
 
     for (int y = 0; y < image.get_height(); y++) {

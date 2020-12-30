@@ -53,6 +53,7 @@ int main(int argc, char* argv[]) {
 
   std::ofstream outfile(argv[argc - 1]);
   outfile << carver.get_image();
+  std::cout << carver.get_image().get_width() << ", " << carver.get_image().get_height() << "\n";
   outfile.close();
   // ImagePPM image1 = ImagePPM("images/image1.ppm");
   // ImagePPM image2 = image1;

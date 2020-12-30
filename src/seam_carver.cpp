@@ -29,33 +29,27 @@ int SeamCarver::get_energy(int row, int col) const {
     Pixel left, right, up , down;
 
     if (row == 0) {
-        // Wrap around for column
-        up = image_.get_pixel(get_height() - 1, col);
-    }
-    if (col == 0) {
-        // Wrap around for row
-        left = image_.get_pixel(row, get_width() - 1);
-    }
-    if (row == get_height() - 1) {
-        // Wrap around
-        down = image_.get_pixel(0, col);
-    }
-    if (col == get_width() - 1) {
-        //  wrap around
-        right = image_.get_pixel(row, 0);
+        up = image_.get_pixel(image_.get_height()-1, col);
+    } else {
+        up = image_.get_pixel(row-1, col);
     }
 
-    if (left.get_red() == -1) {
-        left = image_.get_pixel(row, col - 1);
+    if (row == image_.get_height() - 1) {
+        down = image_.get_pixel(0, col);
+    } else {
+        down = image_.get_pixel(row+1, col);
     }
-    if (right.get_red() == -1) {
-        right = image_.get_pixel(row, col + 1);
+
+    if (col == 0) {
+        left = image_.get_pixel(row, image_.get_width()-1);
+    } else {
+        left = image_.get_pixel(row, col-1);
     }
-    if (down.get_red() == -1) {
-        down = image_.get_pixel(row + 1, col);
-    }
-    if (up.get_red() == -1) {
-        up = image_.get_pixel(row - 1, col);
+
+    if (col == image_.get_width() - 1) {
+        right = image_.get_pixel(row, 0);
+    } else {
+        right = image_.get_pixel(row, col+1);
     }
 
     int energy = 0;
@@ -239,9 +233,11 @@ int* SeamCarver::get_horizontal_seam() const {
 void SeamCarver::remove_vertical_seam() {
     int * path = get_vertical_seam();
     image_.remove_seam(path, true);
+    delete[] path;
 }
 
 void SeamCarver::remove_horizontal_seam() {
     int * path = get_horizontal_seam();
     image_.remove_seam(path, false);
+    delete[] path;
 }
