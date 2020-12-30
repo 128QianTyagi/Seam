@@ -65,6 +65,14 @@ ImagePPM::ImagePPM(const ImagePPM& source) {
 }
 
 ImagePPM& ImagePPM::operator=( const ImagePPM& source ) {
+    if (pixels_ != nullptr) {   
+        for (int y = 0; y < height_; y++) {
+            delete[] pixels_[y];
+        }
+        delete[] pixels_;
+    }
+
+    pixels_ = nullptr;
     if (this == &source) {
         return *this;
     }
@@ -177,7 +185,7 @@ void ImagePPM::remove_seam(int * path, bool is_vertical) {
         Pixel** buffer = new Pixel*[height_];
         for (int y = 0; y < height_; y++) {
             buffer[y] = new Pixel[width_ - 1];
-            for (int x = 0; x < width_; x++) {
+            for (int x = 0; x < width_ - 1; x++) {
                 if (x == path[y])
                     continue;
                 buffer[y][x] = pixels_[y][x];
@@ -193,7 +201,7 @@ void ImagePPM::remove_seam(int * path, bool is_vertical) {
         pixels_ = buffer;
     } else {
         Pixel** buffer = new Pixel*[height_ - 1];
-        for (int y = 0; y < height_; y++) {
+        for (int y = 0; y < height_ - 1; y++) {
             buffer[y] = new Pixel[width_];
             for (int x = 0; x < width_; x++) {
                 if (y == path[y])

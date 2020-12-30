@@ -51,9 +51,9 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  // std::ofstream outfile(argv[argc - 1]);
-  // outfile << carver.get_image();
-  // outfile.close();
+  std::ofstream outfile(argv[argc - 1]);
+  outfile << carver.get_image();
+  outfile.close();
   // ImagePPM image1 = ImagePPM("images/image1.ppm");
   // ImagePPM image2 = image1;
   // Pixel p = image1.get_pixel(2, 3);
