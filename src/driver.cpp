@@ -54,21 +54,29 @@ int main(int argc, char* argv[]) {
   // std::ofstream outfile(argv[argc - 1]);
   // outfile << carver.get_image();
   // outfile.close();
-  ImagePPM image = ImagePPM("images/image1.ppm");
-  ImagePPM image2 = image;
-  Pixel p = image.get_pixel(2, 3);
-  std::cout << p.get_red() << ", " << p.get_green() << ", " << p.get_blue() << "\n";
-  image.~ImagePPM();
+  // ImagePPM image = ImagePPM("images/image1.ppm");
+  // ImagePPM image2 = image;
+  // Pixel p = image.get_pixel(2, 3);
+  // std::cout << p.get_red() << ", " << p.get_green() << ", " << p.get_blue() << "\n";
+  // image.~ImagePPM();
 
 
-  Pixel p2 = image2.get_pixel(2, 3);
-  std::cout << p2.get_red() << ", " << p2.get_green() << ", " << p2.get_blue() << "\n";  
+  // Pixel p2 = image2.get_pixel(2, 3);
+  // std::cout << p2.get_red() << ", " << p2.get_green() << ", " << p2.get_blue() << "\n";  
 
-  SeamCarver carver = SeamCarver(image2);
-  std::cout << image2.get_pixel(0, 1).get_red() << ", " << image2.get_pixel(0, 1).get_green() << ", " << image2.get_pixel(0, 1).get_blue() << "\n";
-  std::cout << image2.get_pixel(0, 3).get_red() << ", " << image2.get_pixel(0, 3).get_green() << ", " << image2.get_pixel(0, 3).get_blue() << "\n";
-  std::cout << image2.get_pixel(1, 0).get_red() << ", " << image2.get_pixel(1, 0).get_green() << ", " << image2.get_pixel(1, 0).get_blue() << "\n";
-  std::cout << image2.get_pixel(2, 0).get_red() << ", " << image2.get_pixel(2, 0).get_green() << ", " << image2.get_pixel(2, 0).get_blue() << "\n";
+  // SeamCarver carver = SeamCarver(image2);
+  // std::cout << image2.get_pixel(0, 1).get_red() << ", " << image2.get_pixel(0, 1).get_green() << ", " << image2.get_pixel(0, 1).get_blue() << "\n";
+  // std::cout << image2.get_pixel(0, 3).get_red() << ", " << image2.get_pixel(0, 3).get_green() << ", " << image2.get_pixel(0, 3).get_blue() << "\n";
+  // std::cout << image2.get_pixel(1, 0).get_red() << ", " << image2.get_pixel(1, 0).get_green() << ", " << image2.get_pixel(1, 0).get_blue() << "\n";
+  // std::cout << image2.get_pixel(2, 0).get_red() << ", " << image2.get_pixel(2, 0).get_green() << ", " << image2.get_pixel(2, 0).get_blue() << "\n";
+  // return 0;
+
+  std::fstream imageFile = std::fstream("images/image1.ppm");
+  ImagePPM image;
+  imageFile >> image;
+  std::cout << image.get_width() << " , " << image.get_height() << "\n";
+  std::cout << "printing imageppm\n";
+  std::cout << image;
   return 0;
 }
 

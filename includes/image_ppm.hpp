@@ -46,6 +46,7 @@ public:
   /**
    * Add any helper methods you may need
    */
+  void remove_seam(int * path, bool is_vertical);
 
 private:
   int height_;

@@ -177,13 +177,13 @@ std::vector<std::vector<int>> SeamCarver::compute_horizontal_energies() const {
             int best = get_energy(row, col + 1);
 
             if (row < get_height() - 1) {
-                int right = get_energy(row + 1, col + 1);
-                best = std::min(best, right);
+                int down = get_energy(row + 1, col + 1);
+                best = std::min(best, down);
             }
 
-            if (col > 0) {
-                int left = get_energy(row + 1, col - 1);
-                best = std::min(best, left);
+            if (row > 0) {
+                int up = get_energy(row - 1, col + 1);
+                best = std::min(best, up);
             }
 
             result[row][col] = best + energy;
@@ -192,4 +192,56 @@ std::vector<std::vector<int>> SeamCarver::compute_horizontal_energies() const {
 
     return result;
     // std::cout << result.size() << "," << result[0].size() << "\n";
+}
+
+int* SeamCarver::get_horizontal_seam() const {
+    std::vector<std::vector<int>> energies = compute_horizontal_energies();
+    int * path = new int[get_width()];
+
+    int startingValue = energies[0][0];
+    int currentColumn = 0;
+
+    for (int row = 1; row < get_height(); row++) {
+        if (energies[row][0] < startingValue) {
+            startingValue = energies[row][0];
+            currentColumn = row;
+        }
+    }    
+
+    path[0] = currentColumn;
+
+    for (int i = 0; i < get_width() - 1; i++) {
+        startingValue = energies[path[i]][i + 1];
+        currentColumn = path[i];
+
+        if (path[i] < get_height() - 1) {
+            int down = energies[path[i] + 1][i + 1];
+            if (down < startingValue) {
+                startingValue = down;
+                currentColumn = path[i] + 1;
+            }
+        }
+
+        if (path[i] > 0) {
+            int up = energies[path[i] - 1][i + 1];
+            if (up < startingValue) {
+                startingValue = up;
+                currentColumn = path[i] - 1;
+            }
+        }
+
+        path[i + 1] = currentColumn;
+    }
+
+    return path;
+}
+
+void SeamCarver::remove_vertical_seam() {
+    int * path = get_vertical_seam();
+    image_.remove_seam(path, true);
+}
+
+void SeamCarver::remove_horizontal_seam() {
+    int * path = get_horizontal_seam();
+    image_.remove_seam(path, false);
 }
